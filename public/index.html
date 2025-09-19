@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Queueing System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Office Queueing System</h1>
+            <p>Efficient service management for your office</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('customer')">Customer</div>
+            <div class="tab" onclick="switchTab('employee')">Employee Terminal</div>
+            <div class="tab" onclick="switchTab('display')">Public Display</div>
+        </div>
+
+        <!-- Customer Interface -->
+        <div id="customer" class="tab-content active">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalWaiting">0</div>
+                    <div class="stat-label">People Waiting</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avgWaitTime">0</div>
+                    <div class="stat-label">Avg Wait (min)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="servedToday">0</div>
+                    <div class="stat-label">Served Today</div>
+                </div>
+            </div>
+
+            <h2>Select Service</h2>
+            <div class="service-buttons" id="serviceButtons">
+                <!-- Services will be populated dynamically -->
+            </div>
+
+            <div id="customerQueue" class="queue-display" style="display: none;">
+                <h3>Your Queue Number</h3>
+                <div class="queue-number" id="customerNumber"></div>
+                <p id="customerService"></p>
+                <p>Please wait for your number to be called</p>
+            </div>
+        </div>
+
+        <!-- Employee Interface -->
+        <div id="employee" class="tab-content">
+            <div class="employee-section">
+                <h2>Employee Terminal</h2>
+                
+                <div class="window-selector">
+                    <label><strong>Select Window:</strong></label>
+                    <select id="windowSelect" class="window-select">
+                        <option value="">Choose Window</option>
+                        <option value="Cashier Window 1">Cashier Window 1</option>
+                        <option value="Cashier Window 2">Cashier Window 2</option>
+                        <option value="Cashier Window 3">Cashier Window 3</option>
+                        <option value="Information Window 1">Information Window 1</option>
+                        <option value="Information Window 2">Information Window 2</option>
+                        <option value="Service Window 1">Service Window 1</option>
+                    </select>
+                </div>
+
+                <div class="queue-controls">
+                    <div class="control-btn accept-btn" id="acceptBtn">Accept Next Queue</div>
+                    <div class="control-btn complete-btn" id="completeBtn">Complete Service</div>
+                </div>
+
+                <!-- Add Category Section -->
+                <div class="add-category-section">
+                    <h4 style="margin-bottom: 15px; color: #1976D2;">📋 Add New Service Category</h4>
+                    <div>
+                        <input type="text" id="categoryInput" class="category-input" placeholder="Enter category name (e.g., Registrar, Information, Support)" maxlength="20">
+                        <div class="category-add-btn" id="addCategoryBtn">Add Category</div>
+                    </div>
+                    <div class="current-categories">
+                        <strong>Current Categories:</strong>
+                        <div id="categoryList"></div>
+                    </div>
+                </div>
+
+                <div id="currentServing" style="margin-top: 20px; display: none;">
+                    <h3>Currently Serving</h3>
+                    <div class="queue-item">
+                        <strong>Queue Number: </strong><span id="servingNumber"></span><br>
+                        <strong>Service: </strong><span id="servingService"></span><br>
+                        <strong>Started: </strong><span id="servingTime"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pending-queues">
+                <h3>Pending Queues</h3>
+                <div id="pendingList">
+                    <p>No pending queues</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Public Display -->
+        <div id="display" class="tab-content">
+            <h2>Current Service Status</h2>
+            <table class="display-table">
+                <thead>
+                    <tr>
+                        <th>Window Name</th>
+                        <th>Queue Number</th>
+                        <th>Elapsed Time</th>
+                    </tr>
+                </thead>
+                <tbody id="displayTableBody">
+                    <tr>
+                        <td colspan="3" style="text-align: center; color: #666;">No active services</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/script.js"></script>
+    
+    </body>
+</html>
