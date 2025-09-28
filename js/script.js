@@ -336,7 +336,11 @@
 
         function getElapsedTime(startTime) {
             const now = new Date();
-            const elapsed = Math.floor((now - startTime) / 1000);
+            const start = new Date(startTime); // <-- ensures it's a Date
+            const elapsed = Math.floor((now - start) / 1000);
+
+            if (isNaN(elapsed)) return "0:00"; // fallback in case of invalid time
+
             const minutes = Math.floor(elapsed / 60);
             const seconds = elapsed % 60;
             return `${minutes}:${seconds.toString().padStart(2, '0')}`;
